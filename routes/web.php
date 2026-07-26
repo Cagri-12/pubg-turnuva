@@ -103,7 +103,7 @@ Route::get('/tournaments/{tournament}', [TournamentController::class, 'show'])
         ->name('admin.tournaments');
 
     Route::get('/tournaments/{tournament}/slots', [RegistrationController::class, 'slots'])
-        ->name('registrations.slots'); 
+        ->name('slots.show'); 
 
 });
 
