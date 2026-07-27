@@ -45,8 +45,6 @@ class RegisteredUserController extends Controller
             'is_admin' => $request->email === 'akarcacagri8@gmail.com',
         ]);
 
-        event(new Registered($user));
-
 Auth::login($user);
 
 if ($user->is_admin) {
