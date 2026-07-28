@@ -387,6 +387,41 @@ font-weight:800;
 color:#fff;
 }
 
+@media (max-width:768px){
+
+.dashboard{
+    padding:15px;
+}
+
+.header-card{
+    padding:25px;
+    min-height:auto;
+    text-align:center;
+}
+
+.header-card h1{
+    font-size:34px !important;
+}
+
+.hero-buttons{
+    flex-direction:column;
+}
+
+.hero-btn{
+    width:100%;
+}
+
+.top-grid,
+.bottom-grid{
+    grid-template-columns:1fr;
+}
+
+.card{
+    padding:20px;
+}
+
+}
+
 /* ===========================
    MOBİL GÖRÜNÜM
 =========================== */
