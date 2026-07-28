@@ -56,11 +56,11 @@ body{
     position:relative;
     overflow:hidden;
 
-    min-height:370px;
+    min-height:650px;
 
     border-radius:30px;
 
-    padding:60px;
+    padding:25px;
 
     background:
     linear-gradient(90deg,
@@ -69,7 +69,7 @@ body{
     url('/images/hero-banner.webp');
 
     background-size:cover;
-    background-position:center;
+    background-position:right center;
 
     border:1px solid rgba(255,255,255,.08);
 
