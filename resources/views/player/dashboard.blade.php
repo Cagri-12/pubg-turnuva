@@ -387,6 +387,86 @@ font-weight:800;
 color:#fff;
 }
 
+/* ===========================
+   MOBİL GÖRÜNÜM
+=========================== */
+
+@media (max-width:768px){
+
+.dashboard{
+    padding:15px;
+}
+
+.header-card{
+    padding:25px;
+    min-height:auto;
+    text-align:center;
+}
+
+.hero-badge{
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+.header-card h1{
+    font-size:34px !important;
+    line-height:1.2;
+}
+
+.hero-content p{
+    font-size:15px !important;
+    max-width:100% !important;
+}
+
+.hero-content>div{
+    justify-content:center !important;
+}
+
+.hero-buttons{
+    flex-direction:column;
+}
+
+.hero-btn{
+    width:100%;
+    text-align:center;
+}
+
+.top-grid,
+.bottom-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+}
+
+.card{
+    padding:20px;
+}
+
+.card-title{
+    font-size:20px;
+}
+
+.info-box strong{
+    font-size:18px;
+}
+
+.info{
+    font-size:15px;
+    word-break:break-word;
+}
+
+img{
+    width:100%;
+    height:auto;
+}
+
+button{
+    width:100%;
+    margin-top:10px;
+}
+
+}
+
 </style>
 
 <div class="dashboard">
