@@ -21,7 +21,7 @@ z-index:999;
 backdrop-filter:blur(15px);
 ">
 
-<div class="max-w-7xl mx-auto px-6">
+<div class="max-w-7xl mx-auto px-3 md:px-6">
 
 <div class="flex justify-between min-h-[88px] items-center py-3">
 
@@ -38,7 +38,7 @@ text-decoration:none;
     <img
     src="{{ asset('images/logo.png') }}"
     style="
-    height:58px;
+    height:48px;
     width:auto;
     object-fit:contain;
     display:block;
@@ -47,7 +47,7 @@ text-decoration:none;
     <div>
 
         <div style="
-        font-size:24px;
+        font-size:20px;
         font-weight:900;
         line-height:1;
         letter-spacing:1px;
@@ -64,27 +64,28 @@ text-decoration:none;
 
         </div>
 
-        <div style="
-        margin-top:6px;
-        color:#94a3b8;
-        font-size:12px;
-        letter-spacing:3px;
-        ">
-            PUBG MOBILE TOURNAMENT
-        </div>
+        <div
+class="hidden md:block"
+style="
+margin-top:6px;
+color:#94a3b8;
+font-size:12px;
+letter-spacing:3px;
+">
+    PUBG MOBILE TOURNAMENT
+</div>
 
     </div>
 
 </a>
 
-</a>
-
-<div
-class="hidden sm:flex items-center gap-10"
+<div style="
+class="hidden lg:flex items-center gap-8"
 style="
-margin-left:140px;
+margin-left:50px;
 margin-top:6px;
 ">
+</a>
 
 @if(auth()->user()->is_admin && !request()->routeIs('player.*'))
 
