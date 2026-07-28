@@ -19,144 +19,372 @@
 
 <style>
 
+:root{
+    --bg:#050812;
+    --card:rgba(15,23,42,.78);
+    --border:rgba(255,255,255,.08);
+    --purple:#7c3aed;
+    --purple2:#a855f7;
+    --text:#fff;
+    --muted:#94a3b8;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:
+    linear-gradient(rgba(4,7,18,.88),rgba(4,7,18,.94)),
+    url('/images/space-bg.webp');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:var(--text);
+}
+
+.dashboard{
+    max-width:1450px;
+    margin:auto;
+    padding:35px;
+}
+
 .header-card{
 
     position:relative;
     overflow:hidden;
 
+    min-height:370px;
+
+    border-radius:30px;
+
+    padding:60px;
+
     background:
-    linear-gradient(
-        90deg,
-        rgba(8,10,20,.60) 0%,
-        rgba(8,10,20,.40) 35%,
-        rgba(8,10,20,.35) 65%,
-        rgba(8,10,20,.18) 100%
-    ),
+    linear-gradient(90deg,
+    rgba(7,9,20,.82),
+    rgba(7,9,20,.45)),
     url('/images/hero-banner.webp');
 
     background-size:cover;
     background-position:center;
-    background-repeat:no-repeat;
 
-    min-height:340px;
-    padding:55px 60px;
+    border:1px solid rgba(255,255,255,.08);
 
-    border-radius:28px;
+    box-shadow:
+    0 15px 45px rgba(0,0,0,.45);
+
 }
 
-body{
-    background:
-        linear-gradient(
-            rgba(5,8,18,.82),
-            rgba(5,8,18,.90)
-        ),
-        url('/images/space-bg.webp');
+.header-card::before{
 
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-attachment:fixed;
+    content:"";
 
-    background-color:#050812;
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    right:-180px;
+    top:-180px;
+
+    border-radius:50%;
+
+    background:rgba(124,58,237,.18);
+
+    filter:blur(80px);
+
 }
 
-.dashboard{
-    max-width:1300px;
-    margin:auto;
-    padding:35px;
+.hero-content{
 
-    background:transparent;
+    position:relative;
+    z-index:5;
+
 }
 
-.header-card h1{
-    font-size:38px;
-    margin:0;
+.hero-badge{
+
+    display:inline-block;
+
+    background:rgba(124,58,237,.20);
+
+    color:#fff;
+
+    padding:10px 18px;
+
+    border-radius:50px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    margin-bottom:20px;
+
 }
 
-.header-card p{
-    margin-top:10px;
-    font-size:18px;
+.hero-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-top:25px;
+
+}
+
+.hero-btn{
+
+    padding:14px 28px;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#7c3aed,#4f46e5);
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    transition:.30s;
+
+    box-shadow:0 10px 25px rgba(124,58,237,.35);
+
+}
+
+.hero-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 20px 35px rgba(124,58,237,.50);
+
+}
+
+.hero-btn.secondary{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
 }
 
 .grid{
-    display:flex;
-    flex-direction:column;
-    gap:25px;
+
     margin-top:35px;
+
+}
+
+.top-grid,
+.bottom-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr 320px;
+
+    gap:25px;
+
+    margin-bottom:25px;
+
 }
 
 .card{
-    background:#1e293b;
-    color:white;
-    border-radius:18px;
-    padding:30px;
-    margin-bottom:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,.30);
+
+    background:var(--card);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    padding:28px;
+
+    transition:.30s;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.30);
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:rgba(124,58,237,.45);
+
+    box-shadow:0 20px 45px rgba(124,58,237,.18);
+
 }
 
 .card-title{
+
     display:flex;
+
     align-items:center;
+
     gap:10px;
 
     font-size:22px;
-    font-weight:700;
 
-    margin-bottom:30px;
+    font-weight:800;
 
-    color:#fff;
-}
-
-.info{
-    margin:12px 0;
-    font-size:18px;
-}
-
-.success{
-    color:#22c55e;
-    font-weight:bold;
-}
-
-.warning{
-    color:#facc15;
-    font-weight:bold;
-}
-
-.danger{
-    color:#ef4444;
-    font-weight:bold;
-}
-
-.top-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr 320px;
-    gap:25px;
     margin-bottom:25px;
-}
 
-.bottom-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr 320px;
-    gap:25px;
-    margin-top:25px;
 }
 
 .info-item{
+
     margin-bottom:18px;
+
 }
 
 .info-item label{
-    display:block;
-    font-size:15px;
-    color:#94a3b8;
-    margin-bottom:6px;
+
+    color:var(--muted);
+
+    font-size:14px;
+
 }
 
 .info-item strong{
+
     display:block;
-    font-size:22px;
-    font-weight:700;
-    color:#fff;
+
+    margin-top:5px;
+
+    font-size:21px;
+
+}
+
+.info{
+
+    margin:14px 0;
+
+    font-size:17px;
+
+}
+
+.success{
+
+    color:#22c55e;
+
+}
+
+.warning{
+
+    color:#facc15;
+
+}
+
+.danger{
+
+    color:#ef4444;
+
+}
+
+img{
+
+    max-width:100%;
+
+    border-radius:15px;
+
+}
+
+@media(max-width:1200px){
+
+.top-grid,
+.bottom-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.dashboard{
+
+padding:18px;
+
+}
+
+.header-card{
+
+padding:35px;
+
+}
+
+.header-card h1{
+
+font-size:42px !important;
+
+}
+
+}
+
+.info-item strong{
+font-size:22px;
+font-weight:800;
+margin-top:6px;
+color:white;
+}
+
+.quick-btn{
+display:flex;
+align-items:center;
+gap:12px;
+padding:18px;
+margin-bottom:15px;
+border-radius:14px;
+text-decoration:none;
+color:#fff;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+transition:.3s;
+font-weight:700;
+}
+
+.quick-btn:hover{
+background:#7c3aed;
+transform:translateX(6px);
+box-shadow:0 10px 30px rgba(124,58,237,.35);
+}
+
+.info-grid{
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.info-box{
+background:rgba(255,255,255,.05);
+padding:18px;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.08);
+transition:.30s;
+}
+
+.info-box:hover{
+background:rgba(124,58,237,.10);
+border-color:#7c3aed;
+transform:translateY(-3px);
+box-shadow:0 12px 25px rgba(124,58,237,.20);
+}
+
+.info-box label{
+display:block;
+font-size:14px;
+color:#94a3b8;
+margin-bottom:8px;
+}
+
+.info-box strong{
+font-size:22px;
+font-weight:800;
+color:#fff;
 }
 
 </style>
@@ -165,83 +393,91 @@ body{
 
 <div class="header-card">
 
-    <div class="hero-overlay"></div>
-
     <div class="hero-content">
 
-        <span
-    class="hero-badge"
-    style="color:#ffffff !important;"
->
-    PUBG MOBILE TOURNAMENT
-</span>
+        <span class="hero-badge">
+            PUBG MOBILE TOURNAMENT
+        </span>
 
-       <h1
+        <h1 style="
+            font-size:58px;
+            font-weight:900;
+            line-height:1.05;
+            margin-top:10px;
+            text-shadow:0 8px 30px rgba(0,0,0,.65);
+        ">
+            <span style="color:#c084fc;">SPACE</span>
+            <span style="color:#8b5cf6;">STONE</span>
+            <span style="color:#ffffff;">STARS</span>
+        </h1>
 
-style="
+        <p style="
+            margin-top:18px;
+            font-size:19px;
+            color:#e2e8f0;
+            max-width:620px;
+            line-height:1.7;
+        ">
+            PUBG Mobile turnuvalarına katıl, takımını yönet ve Space Stone Stars
+            topluluğunun bir parçası ol.
+        </p>
 
-font-size:54px;
+        <div style="
+            margin-top:30px;
+            display:flex;
+            align-items:center;
+            gap:15px;
+            flex-wrap:wrap;
+        ">
 
-font-weight:900;
+            <div style="
+                width:62px;
+                height:62px;
+                border-radius:50%;
+                background:rgba(255,255,255,.08);
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:28px;
+                backdrop-filter:blur(10px);
+            ">
+                👤
+            </div>
 
-text-shadow:0 3px 20px rgba(0,0,0,.8);
+            <div>
 
-line-height:1.1;
+                <div style="
+                    color:#94a3b8;
+                    font-size:14px;
+                ">
+                    Hoş Geldin
+                </div>
 
-">
+                <div style="
+                    font-size:30px;
+                    font-weight:800;
+                    color:#fff;
+                ">
+                    {{ auth()->user()->name }}
+                </div>
 
-<span style="color:#c084fc;">
+            </div>
 
-SPACE
+        </div>
 
-</span>
+        <div class="hero-buttons">
 
-<span style="color:#8b5cf6;">
+            <a href="{{ route('tournaments.index') }}"
+               class="hero-btn">
+                🏆 Turnuvalar
+            </a>
 
-STONE
+            <a href="{{ route('supports.index') }}"
+               class="hero-btn secondary">
+                🎧 Destek Merkezi
+            </a>
 
-</span>
-
-<span style="color:#ffffff;">
-
-STARS
-
-</span>
-
-</h1>
-
-       <p
-    class="hero-text"
-    style="color:#ffffff !important; text-shadow:0 2px 10px rgba(0,0,0,.8) !important;"
->
-    Compete • Survive • Become Legend
-</p>
-
-        <h3
-    style="color:#ffffff !important; margin-top:12px; font-size:26px; font-weight:700;"
->
-    Hoş Geldin
-    <span style="color:#c084fc !important;">
-        {{ auth()->user()->name }}
-    </span>
-    👋
-</h3>
-
-       <div class="hero-buttons" style="margin-top:18px;">
-
-    <a href="{{ route('tournaments.index') }}"
-   class="hero-btn"
-   style="color:#ffffff !important;">
-    🏆 Turnuvalar
-</a>
-
-   <a href="{{ route('supports.index') }}"
-   class="hero-btn secondary"
-   style="color:#ffffff !important;">
-    🎧 Destek
-</a>
-
-</div>
+        </div>
 
     </div>
 
@@ -254,53 +490,77 @@ STARS
         {{-- 🏆 Turnuva Bilgilerim --}}
         <div class="card">
 
-            <div class="card-title">
-                🏆 Turnuva Bilgilerim
-            </div>
+            <div class="card-title" style="
+justify-content:space-between;
+border-bottom:1px solid rgba(255,255,255,.08);
+padding-bottom:18px;
+">
 
-            @if($registration)
+    <span style="display:flex;align-items:center;gap:10px;">
+        🏆 Turnuva Bilgilerim
+    </span>
 
-                <div class="info-grid" style="display:flex;flex-direction:column;gap:10px;">
+    <span style="
+        background:rgba(124,58,237,.18);
+        color:#c084fc;
+        padding:6px 12px;
+        border-radius:20px;
+        font-size:13px;
+        font-weight:700;
+    ">
+        Oyuncu
+    </span>
 
-                    <div class="info-item">
-                        <label>🏆 Turnuva</label>
-                        <strong>{{ $registration->tournament->title }}</strong>
-                    </div>
+</div>
 
-                    <div class="info-item">
-                        <label>👥 Takım</label>
-                        <strong>{{ $registration->team_name }}</strong>
-                    </div>
+           @if($registration)
 
-                    <div class="info-item">
-                        <label>📱 Telefon</label>
-                        <strong>{{ $registration->phone }}</strong>
-                    </div>
+<div class="info-grid">
 
-                    <div class="info-item">
-                        <label>📋 Başvuru Durumu</label>
+    <div class="info-item info-box">
+        <label>🏆 Turnuva</label>
+        <strong>{{ $registration->tournament->title }}</strong>
+    </div>
 
-                        @if($registration->status=="Onaylandı")
-                            <strong class="success">🟢 Onaylandı</strong>
+    <div class="info-item info-box">
+        <label>👥 Takım</label>
+        <strong>{{ $registration->team_name }}</strong>
+    </div>
 
-                        @elseif($registration->status=="Bekliyor")
-                            <strong class="warning">🟡 Bekliyor</strong>
+    <div class="info-item info-box">
+        <label>📱 Telefon</label>
+        <strong>{{ $registration->phone }}</strong>
+    </div>
 
-                        @else
-                            <strong class="danger">🔴 Reddedildi</strong>
-                        @endif
+    <div class="info-item info-box">
 
-                    </div>
+        <label>📋 Başvuru Durumu</label>
 
-                </div>
+        @if($registration->status=="Onaylandı")
 
-            @else
+            <strong class="success">🟢 Onaylandı</strong>
 
-                <p class="info">
-                    Henüz bir turnuvaya kayıt olmadınız.
-                </p>
+        @elseif($registration->status=="Bekliyor")
 
-            @endif
+            <strong class="warning">🟡 Bekliyor</strong>
+
+        @else
+
+            <strong class="danger">🔴 Reddedildi</strong>
+
+        @endif
+
+    </div>
+
+</div>
+
+@else
+
+<p class="info">
+    Henüz bir turnuvaya kayıt olmadınız.
+</p>
+
+@endif
 
         </div>
 
@@ -328,17 +588,20 @@ STARS
     </div>
 
     <button
-        onclick="copyText('room-id')"
-        style="
-        background:#7c3aed;
-        color:white;
+    onclick="copyText('room-password')"
+    style="
+        background:linear-gradient(135deg,#7c3aed,#5b21b6);
         border:none;
-        border-radius:8px;
-        padding:8px 12px;
+        border-radius:10px;
+        padding:10px 15px;
+        color:#fff;
+        font-weight:bold;
         cursor:pointer;
-        ">
-        📋
-    </button>
+        transition:.30s;
+        box-shadow:0 10px 25px rgba(124,58,237,.40);
+    ">
+    📋
+</button>
 
 </div>
 
@@ -351,14 +614,16 @@ STARS
 
     <button
         onclick="copyText('room-password')"
-        style="
-        background:#7c3aed;
-        color:white;
-        border:none;
-        border-radius:8px;
-        padding:8px 12px;
-        cursor:pointer;
-        ">
+background:linear-gradient(135deg,#7c3aed,#5b21b6);
+border:none;
+border-radius:10px;
+padding:10px 15px;
+font-weight:bold;
+cursor:pointer;
+transition:.30s;
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(124,58,237,.40);
+ ">
         📋
     </button>
 
@@ -413,25 +678,25 @@ STARS
                 ⚡ Hızlı Menü
             </div>
 
-            <a href="{{ route('tournaments.index') }}"
-               style="display:block;background:#4f46e5;color:white;padding:18px;border-radius:10px;text-decoration:none;margin-bottom:15px;">
-                🏆 Aktif Turnuvalar
-            </a>
+          <a href="{{ route('tournaments.index') }}"
+class="quick-btn">
+🏆 Aktif Turnuvalar
+</a>
 
-            <a href="{{ route('supports.index') }}"
-               style="display:block;background:#0891b2;color:white;padding:18px;border-radius:10px;text-decoration:none;margin-bottom:15px;">
-                🎧 Destek Merkezi
-            </a>
+<a href="{{ route('supports.index') }}"
+class="quick-btn">
+🎧 Destek Merkezi
+</a>
 
-            <a href="{{ route('reports.create') }}"
-               style="display:block;background:#dc2626;color:white;padding:18px;border-radius:10px;text-decoration:none;margin-bottom:15px;">
-                🚨 Slot İşgali Bildir
-            </a>
+<a href="{{ route('reports.create') }}"
+class="quick-btn">
+🚨 Slot İşgali Bildir
+</a>
 
-            <a href="{{ route('profile.edit') }}"
-               style="display:block;background:#f59e0b;color:white;padding:18px;border-radius:10px;text-decoration:none;">
-                👤 Profilim
-            </a>
+<a href="{{ route('profile.edit') }}"
+class="quick-btn">
+👤 Profilim
+</a>
 
         </div>
 
