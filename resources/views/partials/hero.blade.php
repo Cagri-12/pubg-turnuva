@@ -140,13 +140,10 @@
 }
 
 .hero-buttons{
-
     display:flex;
-
+    flex-direction:column;
     gap:18px;
-
-    flex-wrap:wrap;
-
+    align-items:center;
 }
 
 .hero-primary{
