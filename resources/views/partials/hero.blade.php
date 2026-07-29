@@ -372,7 +372,7 @@ Gerçek ödüllü turnuvalara katıl, takımını kur, rakiplerini geride bırak
         🎮 Oyuncu Paneli
     </a>
 
-@endauth
+@endguest
 
 </div>
 
