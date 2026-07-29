@@ -361,21 +361,23 @@ Gerçek ödüllü turnuvalara katıl, takımını kur, rakiplerini geride bırak
 
 @guest
 
-    <a href="{{ route('register') }}" class="hero-btn hero-secondary">
-        🚀 Hemen Kayıt Ol
-    </a>
+<a href="{{ route('register') }}" class="hero-secondary">
 
-    <a href="{{ route('login') }}" class="hero-btn hero-outline">
-        🔑 Giriş Yap
-    </a>
+🚀 Hemen Kayıt Ol
 
-@else
-
-    <a href="{{ route('player.dashboard') }}" class="hero-btn hero-secondary">
-        🎮 Oyuncu Paneli
-    </a>
+</a>
 
 @endguest
+
+@auth
+
+<a href="{{ auth()->user()->is_admin ? route('dashboard') : route('player.dashboard') }}" class="hero-secondary">
+
+👤 Panele Git
+
+</a>
+
+@endauth
 
 </div>
 
