@@ -12,7 +12,7 @@
 
                 <h1>
                     Hoş Geldin,
-                    {{ $user->name }}
+                    {{ auth()->user()?->name }}
                 </h1>
 
                 @if($registration)
