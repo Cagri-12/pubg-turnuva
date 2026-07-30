@@ -78,7 +78,7 @@
 
         </a>
 
-        <a href="{{ route('contact') }}" class="quick-action-card">
+        <a href="#" class="quick-action-card">
 
             <div class="action-icon">
                 📞
