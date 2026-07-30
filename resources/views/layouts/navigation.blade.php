@@ -1,240 +1,439 @@
-@php
-use App\Models\Notification;
+<style>
 
-$notificationCount = Notification::where('user_id', auth()->id())
-    ->where('is_read', false)
-    ->count();
+:root{
+    --nav-bg:#0b1020;
+    --sidebar:#111827;
+    --purple:#7c3aed;
+    --purple2:#a855f7;
+    --text:#ffffff;
+    --muted:#94a3b8;
+    --border:rgba(255,255,255,.08);
+}
 
-$notifications = Notification::where('user_id', auth()->id())
-    ->latest()
-    ->take(5)
-    ->get();
-@endphp
+.player-navbar{
+    position:sticky;
+    top:0;
+    z-index:999;
+    height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    background:rgba(8,12,24,.92);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+}
 
-<nav x-data="{ open: false }"
-style="
-background:#0b1120;
-border-bottom:1px solid rgba(255,255,255,.08);
-position:sticky;
-top:0;
-z-index:999;
-backdrop-filter:blur(15px);
-">
+.nav-left{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
 
-<div class="max-w-7xl mx-auto px-3 md:px-6">
+.logo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-decoration:none;
+}
 
-<div class="flex justify-between min-h-[88px] items-center py-3">
-
-<div class="flex items-center gap-4">
-
-<a href="{{ auth()->user()->is_admin ? route('dashboard') : route('player.dashboard') }}"
-style="
-display:flex;
-align-items:center;
-gap:14px;
-text-decoration:none;
-">
-
-    <img
-    src="{{ asset('images/logo.png') }}"
-    style="
+.logo img{
+    width:48px;
     height:48px;
-    width:auto;
     object-fit:contain;
+}
+
+.logo-title{
     display:block;
-    ">
+    color:white;
+    font-weight:900;
+    font-size:20px;
+    letter-spacing:.5px;
+}
 
-    <div>
+.logo-title strong{
+    color:#c084fc;
+}
 
-        <div style="
-        font-size:20px;
-        font-weight:900;
-        line-height:1;
-        letter-spacing:1px;
-        white-space:nowrap;
-        ">
+.logo small{
+    color:var(--muted);
+    font-size:11px;
+    letter-spacing:2px;
+}
 
-            <span style="color:#8b5cf6;">
-                SPACE STONE
-            </span>
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
 
-            <span style="color:#ffffff;">
-                STARS
-            </span>
+.nav-icon{
+    position:relative;
+    color:#fff;
+    text-decoration:none;
+    font-size:24px;
+    transition:.3s;
+}
 
-        </div>
+.nav-icon:hover{
+    transform:translateY(-2px);
+}
 
-        <div
-class="hidden md:block"
-style="
-margin-top:6px;
-color:#94a3b8;
-font-size:12px;
-letter-spacing:3px;
-">
-    PUBG MOBILE TOURNAMENT
-</div>
+.badge{
+    position:absolute;
+    top:-8px;
+    right:-10px;
+    min-width:20px;
+    height:20px;
+    border-radius:50%;
+    background:#ef4444;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:11px;
+    font-weight:bold;
+}
 
-    </div>
+.user-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
 
-</a>
+.avatar{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--purple),var(--purple2));
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    font-weight:800;
+    font-size:18px;
+    box-shadow:0 8px 20px rgba(124,58,237,.35);
+}
 
-<div style="
-class="hidden lg:flex items-center gap-8"
-style="
-margin-left:50px;
-margin-top:6px;
-">
-</a>
+.user-info strong{
+    display:block;
+    color:#fff;
+    font-size:15px;
+}
 
-@if(auth()->user()->is_admin && !request()->routeIs('player.*'))
+.user-info small{
+    color:var(--muted);
+}
 
-    <x-nav-link :href="route('tournaments.index')" :active="request()->routeIs('tournaments.*')">
-        🏆 Turnuvalar
-    </x-nav-link>
+.menu-toggle{
+    display:none;
+    border:none;
+    background:none;
+    color:white;
+    font-size:28px;
+    cursor:pointer;
+}
 
-    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-        📊 Dashboard
-    </x-nav-link>
+.sidebar{
+    position:fixed;
+    left:0;
+    top:78px;
+    width:270px;
+    height:calc(100vh - 78px);
+    background:rgba(10,15,30,.96);
+    backdrop-filter:blur(20px);
+    border-right:1px solid var(--border);
+    padding:28px 18px;
+    display:flex;
+    flex-direction:column;
+    transition:.35s;
+}
 
-    <x-nav-link :href="route('registrations.index')" :active="request()->routeIs('registrations.*')">
-        📝 Başvurular
-    </x-nav-link>
+.sidebar-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:30px;
+}
 
-    <x-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms.*')">
-        🎮 Oda Yönetimi
-    </x-nav-link>
+.sidebar-header img{
+    width:42px;
+}
 
-    <x-nav-link :href="route('results.index')" :active="request()->routeIs('results.*')">
-        🏆 Sonuçlar
-    </x-nav-link>
+.sidebar-header h3{
+    color:white;
+    font-size:20px;
+    margin:0;
+}
 
-    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
-        👥 Kullanıcılar
-    </x-nav-link>
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    border-radius:14px;
+    text-decoration:none;
+    color:#dbe4f3;
+    transition:.30s;
+    font-weight:600;
+}
 
-    <x-nav-link :href="route('announcements.index')" :active="request()->routeIs('announcements.*')">
-        📢 Duyurular
-    </x-nav-link>
+.sidebar a:hover,
+.sidebar a.active{
+    background:linear-gradient(135deg,var(--purple),#5b21b6);
+    color:#fff;
+    transform:translateX(6px);
+}
 
-    <x-nav-link :href="route('notifications.admin')" :active="request()->routeIs('notifications.admin')">
-        🔔 Bildirim Yönetimi
-    </x-nav-link>
+.logout-btn{
+    width:100%;
+    margin-top:25px;
+    border:none;
+    padding:15px;
+    border-radius:14px;
+    background:#ef4444;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
 
-    <x-nav-link :href="route('supports.admin')" :active="request()->routeIs('supports.admin')">
-        🎧 Destek
-    </x-nav-link>
+.logout-btn:hover{
+    background:#dc2626;
+}
 
-    <x-nav-link :href="route('settings.index')" :active="request()->routeIs('settings.*')">
-        ⚙️ Ayarlar
-    </x-nav-link>
+.mobile-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+    z-index:998;
+}
 
-@else
+.mobile-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
 
-    <x-nav-link :href="route('player.dashboard')" :active="request()->routeIs('player.dashboard')">
-        🏠 Panelim
-    </x-nav-link>
+@media(max-width:992px){
 
-    <x-nav-link :href="route('tournaments.index')" :active="request()->routeIs('tournaments.*')">
-        🏆 Turnuvalar
-    </x-nav-link>
+    .menu-toggle{
+        display:block;
+    }
 
-    <x-nav-link :href="route('supports.index')" :active="request()->routeIs('supports.*')">
-        🎧 Destek
-    </x-nav-link>
+    .sidebar{
+        left:-280px;
+        z-index:999;
+    }
 
-@endif
+    .sidebar.active{
+        left:0;
+    }
 
-</div>
+    .logo small{
+        display:none;
+    }
 
-</div>
+    .user-info{
+        display:none;
+    }
 
-<div style="
-display:flex;
-align-items:center;
-gap:18px;
-margin-left:auto;
-">
+    .player-navbar{
+        padding:0 16px;
+    }
 
-    <div style="position:relative;">
+}
+</style>
 
-        <a href="{{ route('notifications.index') }}"
-           style="color:white;font-size:22px;text-decoration:none;">
+<nav class="player-navbar">
 
-            🔔
+    <div class="nav-left">
 
-            @if($notificationCount > 0)
-                <span style="
-                    position:absolute;
-                    top:-8px;
-                    right:-10px;
-                    background:#ef4444;
-                    color:white;
-                    border-radius:50%;
-                    min-width:20px;
-                    height:20px;
-                    line-height:20px;
-                    text-align:center;
-                    font-size:11px;
-                    font-weight:bold;
-                ">
-                    {{ $notificationCount }}
+        <button id="menuToggle" class="menu-toggle">
+            ☰
+        </button>
+
+        <a href="{{ auth()->user()->is_admin ? route('dashboard') : route('player.dashboard') }}" class="logo">
+
+            <img src="{{ asset('images/logo.png') }}" alt="Logo">
+
+            <div class="logo-text">
+
+                <span class="logo-title">
+                    SPACE STONE <strong>STARS</strong>
                 </span>
-            @endif
+
+                <small>PUBG MOBILE TOURNAMENT</small>
+
+            </div>
 
         </a>
 
     </div>
 
-    <x-dropdown align="right" width="56">
+    <div class="nav-right">
 
-        <x-slot name="trigger">
+        <a href="{{ route('notifications.index') }}" class="nav-icon">
 
-            <button style="
-                background:#7c3aed;
-                color:white;
-                padding:10px 18px;
-                border-radius:12px;
-                font-weight:bold;
-            ">
+            🔔
 
-                @if(auth()->user()->is_admin)
-                    👑 Admin
-                @else
-                    👤 {{ Auth::user()->name }}
-                @endif
+            @if($notificationCount)
 
-            </button>
+                <span class="badge">
+                    {{ $notificationCount }}
+                </span>
 
-        </x-slot>
+            @endif
 
-        <x-slot name="content">
+        </a>
 
-            <x-dropdown-link :href="route('profile.edit')">
-                👤 Profilim
-            </x-dropdown-link>
+        <div class="user-box">
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
+            <div class="avatar">
 
-                <x-dropdown-link
-                    :href="route('logout')"
-                    onclick="event.preventDefault();this.closest('form').submit();">
+                {{ strtoupper(substr(auth()->user()->name,0,1)) }}
 
-                    🚪 Güvenli Çıkış
+            </div>
 
-                </x-dropdown-link>
+            <div class="user-info">
 
-            </form>
+                <strong>{{ auth()->user()->name }}</strong>
 
-        </x-slot>
+                <small>
 
-    </x-dropdown>
+                    @if(auth()->user()->is_admin)
+                        Administrator
+                    @else
+                        Oyuncu
+                    @endif
 
-</div>
+                </small>
 
-</div>
+            </div>
 
-</div>
+        </div>
+
+    </div>
 
 </nav>
+
+<div id="mobileOverlay" class="mobile-overlay"></div>
+
+<aside id="sidebar" class="sidebar">
+
+    <div class="sidebar-header">
+
+        <img src="{{ asset('images/logo.png') }}">
+
+        <h3>SPACE STONE</h3>
+
+    </div>
+
+    @if(auth()->user()->is_admin)
+
+        <a href="{{ route('dashboard') }}"
+           class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            📊 Dashboard
+        </a>
+
+        <a href="{{ route('tournaments.index') }}">
+            🏆 Turnuvalar
+        </a>
+
+        <a href="{{ route('registrations.index') }}">
+            📝 Başvurular
+        </a>
+
+        <a href="{{ route('rooms.index') }}">
+            🎮 Oda Yönetimi
+        </a>
+
+        <a href="{{ route('results.index') }}">
+            🏅 Sonuçlar
+        </a>
+
+        <a href="{{ route('users.index') }}">
+            👥 Kullanıcılar
+        </a>
+
+        <a href="{{ route('settings.index') }}">
+            ⚙ Ayarlar
+        </a>
+
+    @else
+
+        <a href="{{ route('player.dashboard') }}"
+           class="{{ request()->routeIs('player.dashboard') ? 'active' : '' }}">
+            🏠 Panelim
+        </a>
+
+        <a href="{{ route('tournaments.index') }}">
+            🏆 Turnuvalar
+        </a>
+
+        <a href="{{ route('supports.index') }}">
+            🎧 Destek
+        </a>
+
+        <a href="{{ route('profile.edit') }}">
+            👤 Profilim
+        </a>
+
+    @endif
+
+    <form method="POST" action="{{ route('logout') }}" style="margin-top:auto;">
+
+        @csrf
+
+        <button class="logout-btn">
+
+            🚪 Güvenli Çıkış
+
+        </button>
+
+    </form>
+
+</aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const menuBtn = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobileOverlay');
+
+    function openMenu(){
+        sidebar.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu(){
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if(menuBtn){
+        menuBtn.addEventListener('click', openMenu);
+    }
+
+    if(overlay){
+        overlay.addEventListener('click', closeMenu);
+    }
+
+    document.querySelectorAll('.sidebar a').forEach(link=>{
+        link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', e=>{
+        if(e.key === 'Escape'){
+            closeMenu();
+        }
+    });
+
+});
+</script>
