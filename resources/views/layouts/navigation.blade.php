@@ -280,13 +280,13 @@
 
             🔔
 
-            @if($notificationCount)
+            @if(isset($notificationCount) && $notificationCount > 0)
 
-                <span class="badge">
-                    {{ $notificationCount }}
-                </span>
+    <span class="badge">
+        {{ $notificationCount }}
+    </span>
 
-            @endif
+@endif
 
         </a>
 
